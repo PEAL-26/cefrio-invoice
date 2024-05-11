@@ -1,4 +1,5 @@
 import { Metadata } from "next";
+import { Suspense } from "react";
 import { ListInvoices } from "@/components/templates/invoices";
 
 export const metadata: Metadata = {
@@ -6,5 +7,9 @@ export const metadata: Metadata = {
 };
 
 export default function InvoiceListPage() {
-  return <ListInvoices />;
+  return (
+    <Suspense>
+      <ListInvoices />
+    </Suspense>
+  );
 }
