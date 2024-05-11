@@ -14,8 +14,13 @@ export async function GET(
   try {
     const { id } = paramsSchema.parse(params);
 
-    const response = await prisma.customer.findUnique({
+    const response = await prisma.invoice.findUnique({
       where: { id },
+      include: {
+        customer: true,
+        payments: true,
+        products: true,
+      },
     });
 
     return NextResponse.json(response, {
@@ -33,12 +38,13 @@ export async function DELETE(
   try {
     const { id } = paramsSchema.parse(params);
 
-    await prisma.customer.delete({
+    await prisma.invoice.delete({
       where: { id },
     });
 
     return NextResponse.json({ message: "Success" }, { status: 200 });
   } catch (error) {
+    console.log(error);
     return responseError(error);
   }
 }

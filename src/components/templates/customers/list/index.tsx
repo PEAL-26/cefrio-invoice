@@ -4,6 +4,7 @@ import { DataTable } from "@/components/ui/data-table";
 import { columns } from "./columns";
 import { useList } from "./use-list";
 import { CreateEditCustomerDialog } from "./create-edit-modal";
+import { ReactLoading } from "@/libs/react-loading";
 
 export function ListCustomers() {
   const {
@@ -26,13 +27,24 @@ export function ListCustomers() {
 
           <Button onClick={() => handleOpenDialog()}>Novo</Button>
         </div>
-        <DataTable
-          response={response}
-          columns={columns({
-            onEdit: handleOpenDialog,
-            onDelete: handleDelete,
-          })}
-        />
+        {response.isLoading && !response.isError ? (
+          <div className="flex justify-center items-center">
+            <ReactLoading
+              type="spinningBubbles"
+              color={"#000"}
+              height={90}
+              width={90}
+            />
+          </div>
+        ) : (
+          <DataTable
+            response={response}
+            columns={columns({
+              onEdit: handleOpenDialog,
+              onDelete: handleDelete,
+            })}
+          />
+        )}
       </div>
       <CreateEditCustomerDialog
         id={id}

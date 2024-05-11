@@ -49,7 +49,6 @@ export function DataTableRowActions<TData extends { id: string }>({
           <DropdownMenuSeparator />
           <DropdownMenuItem onClick={() => setIsOpenDeleteModal(true)}>
             Delete
-            <DropdownMenuShortcut>⌘⌫</DropdownMenuShortcut>
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>

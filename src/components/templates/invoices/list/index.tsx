@@ -1,9 +1,15 @@
+"use client";
 import Link from "next/link";
+import { ReactLoading } from "@/libs/react-loading";
 import { DataTable } from "@/components/ui/data-table";
 
 import { columns } from "./columns";
+import { useList } from "./use-list";
+import { buttonVariants } from "@/components/ui/button";
 
-export async function ListInvoices() {
+export function ListInvoices() {
+  const { response, handleDelete } = useList();
+
   return (
     <div className="flex-col space-y-8 flex">
       <div className="flex items-center justify-between space-y-2">
@@ -12,9 +18,30 @@ export async function ListInvoices() {
           <p className="text-muted-foreground">Listagem de facturas emitidas</p>
         </div>
 
-        <Link href="/invoices/create">Emitir</Link>
+        <Link
+          className={buttonVariants({ variant: "default" })}
+          href="/invoices/create"
+        >
+          Emitir
+        </Link>
       </div>
-      <DataTable data={[]} columns={columns} />
+      {response.isLoading && !response.isError ? (
+        <div className="flex justify-center items-center">
+          <ReactLoading
+            type="spinningBubbles"
+            color={"#000"}
+            height={90}
+            width={90}
+          />
+        </div>
+      ) : (
+        <DataTable
+          response={response}
+          columns={columns({
+            onDelete: handleDelete,
+          })}
+        />
+      )}
     </div>
   );
 }

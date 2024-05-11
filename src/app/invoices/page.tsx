@@ -5,6 +5,6 @@ export const metadata: Metadata = {
   title: "Facturas",
 };
 
-export default async function InvoiceListPage() {
+export default function InvoiceListPage() {
   return <ListInvoices />;
 }

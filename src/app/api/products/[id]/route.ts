@@ -14,7 +14,7 @@ export async function GET(
   try {
     const { id } = paramsSchema.parse(params);
 
-    const response = await prisma.customer.findUnique({
+    const response = await prisma.product.findUnique({
       where: { id },
     });
 
@@ -33,7 +33,7 @@ export async function DELETE(
   try {
     const { id } = paramsSchema.parse(params);
 
-    await prisma.customer.delete({
+    await prisma.product.delete({
       where: { id },
     });
 

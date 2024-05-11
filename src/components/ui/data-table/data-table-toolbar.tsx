@@ -20,34 +20,37 @@ export function DataTableToolbar<TData>({
   table,
 }: DataTableToolbarProps<TData>) {
   const { setParams } = useSetSearchParams();
-  const [q] = useGetSearchParams({ params: "q" });
+  const [q, size] = useGetSearchParams({ params: ["q", "size"] });
   const [search, setSearch] = useState(q || "");
   const isFiltered = search.trim().length > 0;
-  const debounced = useDebounceValue(search);
+  const debounced = useDebounceValue(search?.trim());
 
   const setParamsSearch = useCallback(() => {
     setParams([
       { name: "q", value: debounced },
       { name: "page", value: debounced ? "1" : "" },
+      { name: "size", value: size },
     ]);
-  }, [debounced, setParams]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [debounced]);
 
   useEffect(() => {
     setParamsSearch();
-  }, [debounced, setParamsSearch]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [debounced]);
 
   const reset = () => {
     setSearch("");
     table.resetColumnFilters();
   };
-  
+
   return (
     <div className="flex items-center justify-between">
       <div className="flex flex-1 items-center space-x-2">
         <Input
           placeholder="Pesquisar..."
           value={search}
-          onChange={(event) => setSearch(String(event.target.value).trim())}
+          onChange={(event) => setSearch(String(event.target.value))}
           className="h-8 w-[150px] placeholder-muted-foreground lg:w-[250px]"
         />
         {isFiltered && (

@@ -14,6 +14,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { useGetSearchParams } from "@/hooks";
 
 interface Navigation {
   currentPage?: number;
@@ -22,11 +23,12 @@ interface Navigation {
   prev?: number | null;
   nextPage?(): void;
   prevPage?(): void;
+  setSizePerPage?(size?: number): void;
 }
 
 interface DataTablePaginationProps<TData> {
   table: Table<TData>;
-  navigation: Navigation;
+  navigation?: Navigation;
 }
 
 export function DataTablePagination<TData>({
@@ -40,7 +42,11 @@ export function DataTablePagination<TData>({
     prev,
     nextPage,
     prevPage,
-  } = navigation;
+    setSizePerPage,
+  } = navigation || {};
+
+  const [size] = useGetSearchParams({ params: ["size"] });
+
   return (
     <div className="flex items-center justify-between px-2">
       <div className="flex-1 text-sm text-muted-foreground">
@@ -51,13 +57,16 @@ export function DataTablePagination<TData>({
         <div className="flex items-center space-x-2">
           <p className="text-sm font-medium">Rows per page</p>
           <Select
-            value={`${table.getState().pagination.pageSize}`}
+            value={size || "10"}
             onValueChange={(value) => {
               table.setPageSize(Number(value));
+              setSizePerPage?.(
+                Number(value) === 10 ? undefined : Number(value)
+              );
             }}
           >
             <SelectTrigger className="h-8 w-[70px]">
-              <SelectValue placeholder={table.getState().pagination.pageSize} />
+              <SelectValue placeholder={size} />
             </SelectTrigger>
             <SelectContent side="top">
               {[10, 20, 30, 40, 50].map((pageSize) => (

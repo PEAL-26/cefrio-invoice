@@ -22,7 +22,7 @@ export interface InvoiceRequestData {
   date: Date;
   dueDate?: Date;
   paymentCondition?: string;
-  products: Product[];
+  invoices: Product[];
   payments?: Payment[];
 }
 
@@ -37,9 +37,9 @@ interface Payment {
   amount: number;
 }
 
-export const productService = crud<
+export const invoiceService = crud<
   InvoiceRequestData,
   InvoiceRequestData,
   InvoiceListResponseData,
   InvoiceParams
->({ route: "products" });
+>({ route: "invoices" });

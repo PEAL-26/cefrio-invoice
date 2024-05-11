@@ -3,12 +3,18 @@
 import { ColumnDef } from "@tanstack/react-table";
 
 import { Checkbox } from "@/components/ui/checkbox";
+import { InvoiceListResponseData } from "@/services/invoices";
 import { DataTableColumnHeader } from "@/components/ui/data-table";
 
-import { Invoice } from "./schema";
 import { DataTableRowActions } from "./data-table-row-actions";
 
-export const columns: ColumnDef<Invoice>[] = [
+interface ColumnProps {
+  onDelete?: (id: string) => void;
+}
+
+export const columns = (
+  props?: ColumnProps
+): ColumnDef<InvoiceListResponseData>[] => [
   {
     id: "select",
     header: ({ table }) => (
@@ -88,6 +94,6 @@ export const columns: ColumnDef<Invoice>[] = [
   },
   {
     id: "actions",
-    cell: ({ row }) => <DataTableRowActions row={row} />,
+    cell: ({ row }) => <DataTableRowActions row={row} actions={props} />,
   },
 ];

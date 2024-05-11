@@ -35,7 +35,7 @@ model Product {
   id          String   @id @unique @default(uuid())
   name        String
   price       Decimal?
-  unitMeasure String?  @map("unit_measure")
+  unitMeasure String?  @default("UN") @map("unit_measure")
   iva         Decimal?
 
   createdAt DateTime? @default(now()) @map("created_at") @db.Timestamp(3)
@@ -94,7 +94,7 @@ model InvoiceProduct {
 
   date        DateTime?
   productName String    @map("product_name")
-  unitMeasure String?   @map("unit_measure")
+  unitMeasure String?   @default("UN") @map("unit_measure")
   price       Decimal?  @default(0.00)
   quantity    Decimal?  @default(0.00)
   discount    Decimal?  @default(0.00)

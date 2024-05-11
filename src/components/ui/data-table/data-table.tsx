@@ -1,6 +1,6 @@
 "use client";
 
-import * as React from "react";
+import { Suspense, useState } from "react";
 import {
   ColumnDef,
   ColumnFiltersState,
@@ -31,21 +31,18 @@ import { IQueryPaginationResponse } from "@/hooks/use-query-pagination/types";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
-  response: IQueryPaginationResponse<TData>;
+  response?: IQueryPaginationResponse<TData>;
 }
 
 export function DataTable<TData, TValue>({
   columns,
   response,
 }: DataTableProps<TData, TValue>) {
-  const [rowSelection, setRowSelection] = React.useState({});
-  const [columnVisibility, setColumnVisibility] =
-    React.useState<VisibilityState>({});
-  const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
-    []
-  );
-  const [sorting, setSorting] = React.useState<SortingState>([]);
-  const { data } = response;
+  const [rowSelection, setRowSelection] = useState({});
+  const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
+  const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
+  const [sorting, setSorting] = useState<SortingState>([]);
+  const { data } = response || { data: [] };
   const table = useReactTable({
     data,
     columns,
@@ -70,7 +67,9 @@ export function DataTable<TData, TValue>({
 
   return (
     <div className="space-y-4">
-      <DataTableToolbar table={table} />
+      <Suspense>
+        <DataTableToolbar table={table} />
+      </Suspense>
       <div className="rounded-md border">
         <Table>
           <TableHeader>

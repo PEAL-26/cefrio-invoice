@@ -46,5 +46,6 @@ export interface IQueryPaginationResponse<TData> {
   prev?: number | null;
   nextPage?(): void;
   prevPage?(): void;
+  setSizePerPage?(size?: number): void;
   refetch?(): Promise<void>;
 }

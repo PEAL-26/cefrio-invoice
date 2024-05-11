@@ -4,11 +4,18 @@ import { ColumnDef } from "@tanstack/react-table";
 
 import { Checkbox } from "@/components/ui/checkbox";
 import { DataTableColumnHeader } from "@/components/ui/data-table";
+import { ProductListResponseData } from "@/services/products";
 
-import { Product } from "./schema";
 import { DataTableRowActions } from "./data-table-row-actions";
 
-export const columns: ColumnDef<Product>[] = [
+interface ColumnProps {
+  onEdit?: (id: string) => void;
+  onDelete?: (id: string) => void;
+}
+
+export const columns = (
+  props?: ColumnProps
+): ColumnDef<ProductListResponseData>[] => [
   {
     id: "select",
     header: ({ table }) => (
@@ -31,23 +38,29 @@ export const columns: ColumnDef<Product>[] = [
     enableHiding: false,
   },
   {
-    accessorKey: "number",
+    accessorKey: "name",
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Nº" />
-    ),
-    cell: ({ row }) => <div className="w-[80px]">{row.getValue("number")}</div>,
-    enableSorting: false,
-    enableHiding: false,
-  },
-  {
-    accessorKey: "type",
-    header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Tipo" />
+      <DataTableColumnHeader column={column} title="Nome" />
     ),
     cell: ({ row }) => {
       return (
-        <div className="flex w-[100px] items-center">
-          <span> {row.getValue("type")}</span>
+        <div className="flex space-x-2">
+          <span className="max-w-[500px] truncate font-medium">
+            {row.getValue("name")}
+          </span>
+        </div>
+      );
+    },
+  },
+  {
+    accessorKey: "unitMeasure",
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Unidade" />
+    ),
+    cell: ({ row }) => {
+      return (
+        <div className="flex items-center">
+          <span>{row.getValue("unitMeasure")}</span>
         </div>
       );
     },
@@ -56,29 +69,30 @@ export const columns: ColumnDef<Product>[] = [
     },
   },
   {
-    accessorKey: "customer",
+    accessorKey: "price",
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Cliente" />
-    ),
-    cell: ({ row }) => {
-      return (
-        <div className="flex space-x-2">
-          <span className="max-w-[500px] truncate font-medium">
-            {row.getValue("customer")}
-          </span>
-        </div>
-      );
-    },
-  },
-  {
-    accessorKey: "total",
-    header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Total" />
+      <DataTableColumnHeader column={column} title="Preço" />
     ),
     cell: ({ row }) => {
       return (
         <div className="flex items-center">
-          <span>{row.getValue("customer.name")}</span>
+          <span>{row.getValue("price")}</span>
+        </div>
+      );
+    },
+    filterFn: (row, id, value) => {
+      return value.includes(row.getValue(id));
+    },
+  },
+  {
+    accessorKey: "iva",
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="IVA" />
+    ),
+    cell: ({ row }) => {
+      return (
+        <div className="flex items-center">
+          <span>{row.getValue("iva")}</span>
         </div>
       );
     },
@@ -88,6 +102,6 @@ export const columns: ColumnDef<Product>[] = [
   },
   {
     id: "actions",
-    cell: ({ row }) => <DataTableRowActions row={row} />,
+    cell: ({ row }) => <DataTableRowActions row={row} actions={props} />,
   },
 ];

@@ -1,4 +1,4 @@
-import { usePathname, useRouter, useSearchParams } from 'next/navigation';
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
 interface GetSearchParamsProps {
   params: string | string[];
@@ -24,7 +24,7 @@ export function useGetSearchParams(props: GetSearchParamsProps) {
 
 type Param = {
   name: string;
-  value: string;
+  value?: string;
 };
 
 export function useSetSearchParams() {

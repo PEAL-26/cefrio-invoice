@@ -1,9 +1,14 @@
 import { ListProducts } from "@/components/templates/products";
+import { Suspense } from "react";
 
 export const metadata = {
   title: "Produtos\\Serviços",
 };
 
 export default function ProductsPage() {
-  return <ListProducts />;
+  return (
+    <Suspense>
+      <ListProducts />
+    </Suspense>
+  );
 }

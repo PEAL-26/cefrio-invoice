@@ -57,6 +57,14 @@ export function useQueryPagination<T>(
     }
   };
 
+  const setSizePerPage = (size?: number) => {
+    if (isFetching) return;
+    setParams([
+      { name: "page", value: size ? "1" : undefined },
+      { name: "size", value: size ? String(size) : undefined },
+    ]);
+  };
+
   return {
     data: response?.data || [],
     isLoading:
@@ -68,6 +76,7 @@ export function useQueryPagination<T>(
     prev: response?.prev,
     nextPage,
     prevPage,
+    setSizePerPage,
     refetch: async () => {
       await refetch();
     },
