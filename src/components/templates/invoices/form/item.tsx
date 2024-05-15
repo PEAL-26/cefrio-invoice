@@ -1,11 +1,13 @@
 "use client";
-import { TableRow, TableCell } from "@/components/ui/table";
-import { Input } from "@/components/ui/input";
+import { useState } from "react";
+
 import {
   AutoComplete,
   AutoCompleteCompleteEvent,
 } from "primereact/autocomplete";
-import { useState } from "react";
+import { cn } from "@/libs/utils";
+import { TableRow, TableCell } from "@/components/ui/table";
+import { Input, inputClassName } from "@/components/ui/input";
 
 export function TableItem() {
   const [value, setValue] = useState("");
@@ -20,18 +22,19 @@ export function TableItem() {
   return (
     <TableRow>
       <TableCell>
-        <Input placeholder="Product or Service" type="text" />
-      </TableCell>
-      <TableCell className="w-[1%]">
-        <Input defaultValue="1" min="1" type="number" className="w-20" />
-      </TableCell>
-      <TableCell className="w-[1%]">
         <AutoComplete
           value={value}
           suggestions={items}
           completeMethod={search}
           onChange={(e) => setValue(e.value)}
+          placeholder="Product or Service"
+          inputClassName={cn(inputClassName)}
         />
+      </TableCell>
+      <TableCell className="w-[1%]">
+        <Input defaultValue="1" min="1" type="number" className="w-20" />
+      </TableCell>
+      <TableCell className="w-[1%]">
         <Input
           defaultValue="0.00"
           min="0.00"

@@ -3,9 +3,10 @@ import { Inter } from "next/font/google";
 import { AppLayout } from "@/components/layout";
 import { PrimeReactProvider } from "primereact/api";
 import { cn } from "@/libs/utils";
+import { QueryClientProvider } from "@/providers";
+import Tailwind from "primereact/passthrough/tailwind";
 
 import "./globals.css";
-import { QueryClientProvider } from "@/providers";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -22,7 +23,7 @@ export default function RootLayout({
     <html lang="pt">
       <body className={cn(inter.className, "overflow-hidden")}>
         <QueryClientProvider>
-          <PrimeReactProvider>
+          <PrimeReactProvider value={{ unstyled: true, pt: Tailwind }}>
             <AppLayout>{children}</AppLayout>
           </PrimeReactProvider>
         </QueryClientProvider>
