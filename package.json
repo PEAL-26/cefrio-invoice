@@ -5,9 +5,12 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
+    "build:prod": "npm i && npm run migrate:dev:co && npm run migrate:prod && npm run prisma:seed",
     "start": "next start",
     "lint": "next lint",
     "migrate:dev": "npx prisma migrate dev",
+    "migrate:dev:co": "npx prisma migrate dev --create-only",
+    "migrate:prod": "npx prisma migrate deploy",
     "prisma:seed": "npx prisma db seed"
   },
   "prisma": {
