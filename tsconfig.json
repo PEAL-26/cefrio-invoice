@@ -19,7 +19,7 @@
     ],
     "baseUrl": ".",
     "paths": {
-      "@/*": ["/*"]
+      "@/*": ["src/*"]
     }
   },
   "include": [
@@ -30,4 +30,4 @@
     "**/*.json"
   ],
   "exclude": ["node_modules"]
-}
+} 
