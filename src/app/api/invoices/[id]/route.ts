@@ -1,5 +1,5 @@
-import { responseError } from "@/helpers/response/route-response";
-import { prisma } from "@/libs/prisma";
+import { responseError } from "../../../../helpers/response/route-response";
+import { prisma } from "../../../../libs/prisma";
 import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
 

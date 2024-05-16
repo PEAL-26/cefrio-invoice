@@ -1,11 +1,11 @@
 import { z } from "zod";
 import { randomUUID } from "crypto";
-import { prisma } from "@/libs/prisma";
+import { prisma } from "../../../libs/prisma";
 import { Prisma } from "@prisma/client";
-import { getAllParams } from "@/helpers/search-params";
+import { getAllParams } from "../../../helpers/search-params";
 import { NextRequest, NextResponse } from "next/server";
-import { responseError } from "@/helpers/response/route-response";
-import { paginationData, setPagination } from "@/helpers/pagination";
+import { responseError } from "../../../helpers/response/route-response";
+import { paginationData, setPagination } from "../../../helpers/pagination";
 
 const listParamsSchema = z.object({
   q: z.string().optional(),
